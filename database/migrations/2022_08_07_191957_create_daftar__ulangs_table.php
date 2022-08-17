@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('daftar__ulang', function (Blueprint $table) {
             $table->id();
-            $table->string('nim');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password')->nullable();
-            $table->boolean('is_logged_in_with_sso')->default(false);
-            $table->string('roles');
-            $table->rememberToken();
+            $table->string('nim');
+            $table->string('kelas');
+            $table->string('upload slip spp');
+            $table->string('upload surat kompensasi');
+            $table->string('upload surat perpustakaan');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('daftar__ulangs');
     }
 };

@@ -19,8 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nim',
         'email',
         'password',
+        'roles',
+        'is_logged_in_with_sso'
     ];
 
     /**
