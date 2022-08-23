@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class LihatData
 {
@@ -16,12 +17,12 @@ class LihatData
      */
     public function handle(Request $request, Closure $next)
     {
-
-        if($request-> lihatdata == 'Berhasil Login'){
-            return redirect()->intended('sso/connect');
-        } else if($request-> lihatdata == 'Tidak Berhasil Login'){
-            return redirect()->intended('sso/login');
+        $access_token = request()->session()->get('access_token');
+        $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
+        if($response) {
+            $request->user = json_decode($response);
+            return $next($request);
         }
-        return $next($request);
+        return response(401)->json("unathorized");
     }
 }

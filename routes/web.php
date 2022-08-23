@@ -74,7 +74,13 @@ Route::get('sso/connect', function (){
             'is_logged_in_with_sso' => true
         ]);
     }
-    // dd($user);
+    
+})->name('sso.connect')->middleware('lihatdata');
+
+
+
+
+// dd($user);
     //    dd(auth()->login($user));
     //     if(auth()->login($user)){
     //         $user = auth()->user();
@@ -90,10 +96,3 @@ Route::get('sso/connect', function (){
     // else{
     //     return response()->json(['error'=>'DATA TIDAK ADA'], 401);
    // }
-
-})->name('sso.connect')->middleware('guest');
-
-// Route::middleware('gust')->get('/user', function (Request $request){
-//     return $request->user();
-// });
-
