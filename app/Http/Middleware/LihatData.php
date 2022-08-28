@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class LihatData
@@ -21,15 +22,13 @@ class LihatData
         $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
         if($response) {
             $request->user = json_decode($response);
-            redirect('/sso/callback');
-         //   $response
             return $next($request);
         }
         return response(401)->json("unathorized");
     }
 }
 
-
+// $response = Auth::user();
 // $response = Http::withHeaders([
             //     'Accept' => 'application/json',
             //     'Authorization' => 'Bearer '.$access_token,
