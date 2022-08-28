@@ -21,7 +21,8 @@ class LihatData
         $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
         if($response) {
             $request->user = json_decode($response);
-         //   $response 
+            redirect('/sso/callback');
+         //   $response
             return $next($request);
         }
         return response(401)->json("unathorized");
