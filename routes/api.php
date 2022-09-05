@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\BeritaController;
+use App\Http\Controllers\api\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('ApiBerita', [BeritaController::class, 'index']);
+
+Route::Post('UploadImage',[ImageController::class,'upload']);

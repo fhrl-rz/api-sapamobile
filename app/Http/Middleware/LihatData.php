@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 class LihatData
 {
@@ -18,17 +19,27 @@ class LihatData
      */
     public function handle(Request $request, Closure $next)
     {
-       $access_token = request()->session()->get('access_token');
+        $access_token = request()->session()->get('access_token');
         $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
         if($response) {
-            $request->user = json_decode($response);
+            
+         //  $request->user = json_decode($response);
+           $user = json_encode($response);
+           $user = User::where('name', $response['name'])->first();
+          if($user->roles == "Mahasiswa"){
+            return redirect($response);
+          } elseif ($user->roles== "dosen"){
+            return redirect('/sso/login');
+          }
             return $next($request);
+        
         }
+        // return redirect('/sso/login');
         return response(401)->json("unathorized");
     }
 }
 
-// $response = Auth::user();
+
 // $response = Http::withHeaders([
             //     'Accept' => 'application/json',
             //     'Authorization' => 'Bearer '.$access_token,
