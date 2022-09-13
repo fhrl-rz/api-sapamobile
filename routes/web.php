@@ -74,7 +74,7 @@ Route::get('sso/connect', function (){
             'is_logged_in_with_sso' => true
         ]);
     }
-    
+
 })->name('sso.connect')->middleware('lihatdata');
 
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\BeritaController;
 use App\Http\Controllers\api\ImageController;
+use App\Http\Controllers\api\PDFViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('ApiBerita', [BeritaController::class, 'index']);
 
 Route::Post('UploadImage',[ImageController::class,'upload']);
+
+Route::get('pdf-view', [PDFViewController::class,'index']);
