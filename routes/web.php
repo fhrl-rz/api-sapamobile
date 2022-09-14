@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\api\PDFViewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,7 +77,9 @@ Route::get('sso/connect', function (){
 
 })->name('sso.connect')->middleware('lihatdata');
 
-
+Route::get('/download_pdf', function(){
+    return  view('pdf');
+});
 
 
 // dd($user);
