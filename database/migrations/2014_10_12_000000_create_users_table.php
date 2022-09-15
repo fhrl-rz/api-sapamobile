@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->string('access_token');
+            $table->string('refresh_token');
+            $table->string('type_token');
             $table->boolean('is_logged_in_with_sso')->default(false);
             $table->string('roles');
             $table->rememberToken();

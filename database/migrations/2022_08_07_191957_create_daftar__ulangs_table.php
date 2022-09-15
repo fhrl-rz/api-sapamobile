@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('nim');
             $table->string('kelas');
-            $table->string('upload slip spp');
+            $table->string('upload pembayaran spp');
             $table->string('upload surat kompensasi');
             $table->string('upload surat perpustakaan');
             $table->timestamps();

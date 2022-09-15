@@ -26,7 +26,8 @@ class LihatData
 
            $request->user = json_decode($response);
            $user = json_encode($response);
-           $user = User::where('name', $response['name'])->first();
+           $access_token = $request->bearerToken();
+        //    $user = User::where('name', $response['name'])->first();
             // return $request;
         //  /    $user = User::with('Mahasiswa', $response['roles'])->get();
         //   if($user->roles == "Mahasiswa"){

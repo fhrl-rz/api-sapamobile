@@ -60,20 +60,35 @@ Route::get('/sso/callback', function (){
 Route::get('sso/connect', function (){
     $access_token = request()->session()->get('access_token');
     $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
-    return $response->json();
-    json_encode($response);
-    $user = json_encode($response);
-    $user = User::where('nim', $response['nomor_induk'])->first();
-    if(!$user){
-        $user = User::create([
-            'email' => $response['email'],
-            'name' => $response['name'],
-            'nim' => $response['nomor_induk'],
-            'roles'=> $response['roles'],
-            'password' => null,
-            'is_logged_in_with_sso' => true
-        ]);
+    $user = $response->json();
+    try {
+        $nim = $user['nomor_induk'];
+    }catch (\Throwable $th){
+            return redirect('sso.login') -> withErorr("Failed login");
+
     }
+    $user = User::where('nim', $response['nomor_induk'])->first();
+    if (!$user){
+        $user = new User;
+
+    }
+
+   // return request()->session()->all();
+   
+
+// return $response->json();
+    // json_encode($response);
+    // $user = json_encode($response);
+    // if(!$user){
+    //     $user = User::create([
+    //         'email' => $response['email'],
+    //         'name' => $response['name'],
+    //         'nim' => $response['nomor_induk'],
+    //         'roles'=> $response['roles'],
+    //         'password' => null,
+    //         'is_logged_in_with_sso' => true
+    //     ]);
+    // }
 
 })->name('sso.connect')->middleware('lihatdata');
 
