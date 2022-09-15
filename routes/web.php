@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\login;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\api\PDFViewController;
@@ -60,24 +60,30 @@ Route::get('/sso/callback', function (){
 Route::get('sso/connect', function (){
     $access_token = request()->session()->get('access_token');
     $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
-    $user = $response->json();
+     $user = $response->json();
     try {
         $nim = $user['nomor_induk'];
     }catch (\Throwable $th){
-            return redirect('sso.login') -> withErorr("Failed login");
+            return redirect('/sso/login') -> withErorr("Failed login");
 
     }
-    $user = User::where('nim', $response['nomor_induk'])->first();
+    $user = login::where('nomor_induk', $nim)->first();
     if (!$user){
-        $user = new User;
-
+        $user = new login;
+        $user-> nim = $response['nomor_induk'];
+        $user->name = $response['name'];
+        $user->email = $response['email'];
+        $user->roles = $response['roles'];
+        $user->save();
     }
+    // Auth:login($user);
+    
 
    // return request()->session()->all();
    
 
-// return $response->json();
-    // json_encode($response);
+    // return $response->json();
+//  json_encode($response);
     // $user = json_encode($response);
     // if(!$user){
     //     $user = User::create([

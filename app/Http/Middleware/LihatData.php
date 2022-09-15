@@ -26,11 +26,11 @@ class LihatData
 
            $request->user = json_decode($response);
            $user = json_encode($response);
-           $access_token = $request->bearerToken();
+        //    $access_token = $request->bearerToken();
         //    $user = User::where('name', $response['name'])->first();
             // return $request;
         //  /    $user = User::with('Mahasiswa', $response['roles'])->get();
-        //   if($user->roles == "Mahasiswa"){
+        //   if($user->roles == "Mahasiswa"){`
         //     return redirect($response);
         //   } elseif ($user->roles == "Dosen"){
         //     return redirect('/sso/login');

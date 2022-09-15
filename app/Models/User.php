@@ -21,9 +21,12 @@ class User extends Authenticatable
         'name',
         'nim',
         'email',
+        'access_token',
+        'refresh_token',
+        'token_type',
         'password',
         'roles',
-        'is_logged_in_with_sso'
+        
     ];
 
     /**
