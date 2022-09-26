@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('ApiBerita', [BeritaController::class, 'index']);
 
 Route::Post('UploadImage',[ImageController::class,'upload']);
+

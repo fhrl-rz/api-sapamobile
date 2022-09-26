@@ -52,37 +52,59 @@ Route::get('/sso/callback', function (){
     ]);
     // return $response->json();
     //json_encode($response);
-   request()->session()->put($response->json());
+    request()->session()->put($response->json());
     return redirect(route('sso.connect'));
+    // return redirect(route('sso.authuser'));
 
 })-> name('sso.callback')->middleware('guest');
 
+
 Route::get('sso/connect', function (){
-    $access_token = request()->session()->get('access_token');
-    $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
-     $user = $response->json();
-    try {
-        $nim = $user['nomor_induk'];
-    }catch (\Throwable $th){
-            return redirect('/sso/login') -> withErorr("Failed login");
+    // $access_token = request()->session()->get('access_token');
+    // $response = Http::withHeaders([
+    //     "Accept" => "application/json",
+    //     "Authorization" => "Bearer" . $access_token
+    // ])->get('http://sso.politeknikaceh.ac.id/api/user');
+    //      $userArray = $response->json();
+    // try {
+    //     $nim = $userArray['nomor_induk'];
+    // }catch (\Throwable $th){
+    //         return redirect('/sso/login') -> withErorr("Failed to get login information! Try again.");
 
-    }
-    $user = login::where('nomor_induk', $nim)->first();
-    if (!$user){
-        $user = new login;
-        $user-> nim = $response['nomor_induk'];
-        $user->name = $response['name'];
-        $user->email = $response['email'];
-        $user->roles = $response['roles'];
-        $user->save();
-    }
-    // Auth:login($user);
-    
+    // }
+    // $user = login::where('nomor_induk', $nim)->first();
+    // if (!$user){
+    //     $user = new login;
+    //     $user-> nim = $userArray['nomor_induk'];
+    //     $user->name = $userArray['name'];
+    //     $user->email = $userArray['email'];
+    //     $user->roles = $userArray['roles'];
+    //     $user->save();
+    // }
+    // Auth::login($user);
+    // return redirect(route("/sso/login"));
 
-   // return request()->session()->all();
-   
+
+})->name('sso.connect')->middleware('lihatdata');
+
+Route::get('/download_pdf', function(){
+    return  view('pdf');
+});
+
+Route::get('/home', function(){
+    return  view('home');
+});
 
     // return $response->json();
+    // $response = Http::withToken($access_token)->get('http://sso.politeknikaceh.ac.id/api/user');
+
+
+
+
+   // return request()->session()->all();
+
+// return redirect()->$response;
+
 //  json_encode($response);
     // $user = json_encode($response);
     // if(!$user){
@@ -96,11 +118,19 @@ Route::get('sso/connect', function (){
     //     ]);
     // }
 
-})->name('sso.connect')->middleware('lihatdata');
 
-Route::get('/download_pdf', function(){
-    return  view('pdf');
-});
+// Route::get('/sso/authuser', function(Request $request){
+//     $acces_token = $request->session()->get("access_token");
+//     $response = Http::withHeaders([
+//         "Accept" => "application/json",
+//         "Authorization" => "Bearer" . $acces_token
+//     ])->get('http://sso.politeknikaceh.ac.id/api/user');
+//     return $response->json();
+// })->name('sso.authuser');
+
+
+
+
 
 
 // dd($user);
